@@ -6,7 +6,7 @@ import { setContext } from '@apollo/client/link/context';
 export const Providers = ({ children }: { children: React.ReactNode }) => {
     // Create an http link to the GraphQL API
     const httpLink = createHttpLink({
-        uri: "http://localhost:3000/api/graphql", // Your GraphQL API endpoint
+        uri: "https://deployed1.vercel.app/api/graphql", // Your GraphQL API endpoint
     });
 
     // Create a context link to add the Authorization header
