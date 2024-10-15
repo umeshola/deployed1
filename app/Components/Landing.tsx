@@ -1,12 +1,28 @@
-'use client'
-import { useState } from "react";
-import { useQuery, useMutation } from "@apollo/client";
-import { ALL_PHOTO } from "../../graphql/quries"; // Adjust the import path accordingly
-import { CHANGE_TITLE, DELETE_PHOTO } from "../../graphql/quries"; // Add your mutations here
-import Image from "next/image";
-export default function Home() {
-    const { loading, error, data } = useQuery(ALL_PHOTO);
-    const [selectedPhoto, setSelectedPhoto] = useState<any>(null); // State to track selected photo
+'use client';
+
+import { useState } from 'react';
+import { useQuery, useMutation } from '@apollo/client';
+import { ALL_PHOTO } from '../../graphql/quries'; // Adjust the import path accordingly
+import { CHANGE_TITLE, DELETE_PHOTO } from '../../graphql/quries'; // Add your mutations here
+import Image from 'next/image';
+
+// Define the types based on your GraphQL query structure
+interface Photo {
+    id: string;
+    image: string;
+    title: string;
+    owner: {
+        name: string;
+    };
+}
+
+interface AllPhotosData {
+    allImg: Photo[];
+}
+
+export default function Landing() {
+    const { loading, error, data } = useQuery<AllPhotosData>(ALL_PHOTO);
+    const [selectedPhoto, setSelectedPhoto] = useState<Photo | null>(null); // State to track selected photo
     const [newTitle, setNewTitle] = useState(''); // State to track title input
 
     const [updatePhoto] = useMutation(CHANGE_TITLE); // Mutation to update photo title
@@ -17,34 +33,39 @@ export default function Home() {
     if (error) return <p>Error: {error.message}</p>;
 
     // Function to handle click on an image
-    const handleImageClick = (photo: any) => {
+    const handleImageClick = (photo: Photo) => {
         setSelectedPhoto(photo); // Set the clicked photo as selected
         setNewTitle(photo.title); // Set the title for editing
     };
 
     // Function to save the edited title
     const handleSaveTitle = () => {
-        updatePhoto({
-            variables: { changeTitleId: selectedPhoto.id, title: newTitle },
-            refetchQueries: [{ query: ALL_PHOTO }] // Refetch after update
-        });
-        setSelectedPhoto(null); // Close the modal or detailed view
+        if (selectedPhoto) {
+            updatePhoto({
+                variables: { changeTitleId: selectedPhoto.id, title: newTitle },
+                refetchQueries: [{ query: ALL_PHOTO }], // Refetch after update
+            });
+            setSelectedPhoto(null); // Close the modal or detailed view
+        }
     };
 
     // Function to delete the photo
     const handleDeletePhoto = async () => {
-        const ans = await deletePhoto({
-            variables: { deletePhotoId: selectedPhoto.id },
-            refetchQueries: [{ query: ALL_PHOTO }] // Refetch after deletion
-        });
-        if (ans.data?.deletePhoto === "You are not the owner") {
-            alert("You are not the owner of this photo");
+        if (selectedPhoto) {
+            const ans = await deletePhoto({
+                variables: { deletePhotoId: selectedPhoto.id },
+                refetchQueries: [{ query: ALL_PHOTO }], // Refetch after deletion
+            });
+            if (ans.data?.deletePhoto === 'You are not the owner') {
+                alert('You are not the owner of this photo');
+            }
+            setSelectedPhoto(null); // Close the modal or detailed view
         }
-        setSelectedPhoto(null); // Close the modal or detailed view
     };
+
     return (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 p-4">
-            {data.allImg.map((photo: any) => (
+            {data?.allImg.map((photo) => (
                 <div
                     key={photo.id}
                     className="border rounded-lg shadow-md overflow-hidden cursor-pointer"
@@ -71,23 +92,14 @@ export default function Home() {
                             placeholder="Enter new title"
                         />
                         <div className="flex justify-between mt-4">
-                            <button
-                                onClick={handleSaveTitle}
-                                className="bg-blue-500 text-white px-4 py-2 rounded"
-                            >
+                            <button onClick={handleSaveTitle} className="bg-blue-500 text-white px-4 py-2 rounded">
                                 Save Title
                             </button>
-                            <button
-                                onClick={handleDeletePhoto}
-                                className="bg-red-500 text-white px-4 py-2 rounded"
-                            >
+                            <button onClick={handleDeletePhoto} className="bg-red-500 text-white px-4 py-2 rounded">
                                 Delete Photo
                             </button>
                         </div>
-                        <button
-                            onClick={() => setSelectedPhoto(null)} // Close the modal
-                            className="mt-4 text-gray-500"
-                        >
+                        <button onClick={() => setSelectedPhoto(null)} className="mt-4 text-gray-500">
                             Close
                         </button>
                     </div>
