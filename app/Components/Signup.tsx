@@ -16,7 +16,7 @@ export default function Home() {
             setToken(storedToken);
         }
     }, []);
-
+    console.log(success)
     const [signup] = useMutation(SINGUP, {
         onCompleted: (data) => {
             const token = data.signup;  // Assuming your mutation returns the token directly
@@ -24,6 +24,7 @@ export default function Home() {
             localStorage.setItem('token', token);
             setToken(token); // Update the state with the token
             setSuccess(true);
+
         },
         onError: (error) => {
             setError(error.message);

@@ -1,10 +1,9 @@
 'use client'
-
 import { useState } from "react";
 import { useQuery, useMutation } from "@apollo/client";
 import { ALL_PHOTO } from "../../graphql/quries"; // Adjust the import path accordingly
 import { CHANGE_TITLE, DELETE_PHOTO } from "../../graphql/quries"; // Add your mutations here
-
+import Image from "next/image";
 export default function Home() {
     const { loading, error, data } = useQuery(ALL_PHOTO);
     const [selectedPhoto, setSelectedPhoto] = useState<any>(null); // State to track selected photo
@@ -51,7 +50,7 @@ export default function Home() {
                     className="border rounded-lg shadow-md overflow-hidden cursor-pointer"
                     onClick={() => handleImageClick(photo)}
                 >
-                    <img src={photo.image} alt={photo.title} className="w-full h-48 object-cover" />
+                    <Image src={photo.image} alt={photo.title} className="w-full h-48 object-cover" />
                     <div className="p-4">
                         <h2 className="text-lg font-semibold">{photo.title}</h2>
                         <p className="text-gray-600">Uploaded by: {photo.owner.name}</p>
@@ -63,7 +62,7 @@ export default function Home() {
             {selectedPhoto && (
                 <div className="fixed top-0 left-0 w-full h-full flex justify-center items-center bg-black bg-opacity-50">
                     <div className="bg-neutral-800 p-6 rounded-lg shadow-lg">
-                        <img src={selectedPhoto.image} alt={selectedPhoto.title} className="w-full h-48 object-cover" />
+                        <Image src={selectedPhoto.image} alt={selectedPhoto.title} className="w-full h-48 object-cover" />
                         <input
                             type="text"
                             value={newTitle}

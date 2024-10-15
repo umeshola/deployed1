@@ -13,7 +13,7 @@ export default function Home() {
     const [uploadedImage, setUploadedImage] = useState<{ title: string, url: string } | null>(null); // State to track uploaded image details
     const [name, setName] = useState(''); // State for login input
     const [error, setError] = useState('');
-
+    console.log(uploadedImage)
     // Check localStorage for token on initial load
     useEffect(() => {
         const storedToken = localStorage.getItem('token');
