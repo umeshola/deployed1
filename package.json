@@ -1,0 +1,38 @@
+{
+    "name": "upload1",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "dev": "next dev",
+        "build": "prisma generate && next build",
+        "start": "next start",
+        "lint": "next lint"
+    },
+    "dependencies": {
+        "@apollo/client": "^3.11.8",
+        "@apollo/server": "^4.11.0",
+        "@as-integrations/next": "^3.1.0",
+        "@clerk/nextjs": "^5.7.2",
+        "@prisma/client": "^5.20.0",
+        "@uploadthing/react": "^7.0.3",
+        "graphql": "^16.9.0",
+        "jsonwebtoken": "^9.0.2",
+        "next": "14.2.15",
+        "react": "^18",
+        "react-dom": "^18",
+        "react-icons": "^5.3.0",
+        "uploadthing": "^7.1.0"
+    },
+    "devDependencies": {
+        "@types/jsonwebtoken": "^9.0.7",
+        "@types/node": "^20",
+        "@types/react": "^18",
+        "@types/react-dom": "^18",
+        "eslint": "^8",
+        "eslint-config-next": "14.2.15",
+        "postcss": "^8",
+        "prisma": "^5.20.0",
+        "tailwindcss": "^3.4.1",
+        "typescript": "^5"
+    }
+}
