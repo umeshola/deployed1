@@ -1,7 +1,7 @@
 "use client"
 import { useState, useEffect } from "react";
 import { useMutation } from "@apollo/client";
-import { SINGUP } from "../graphql/quries";
+import { SINGUP } from "../../graphql/quries";
 
 export default function Home() {
     const [name, setName] = useState('');

@@ -2,9 +2,9 @@
 
 import { useState, useEffect } from 'react';
 import { useMutation } from '@apollo/client';
-import { UploadButton } from '../utils/uploadthing';
+import { UploadButton } from '../../utils/uploadthing';
 import Signup from './Signup';
-import { ADD_PHOTO, LOGIN } from '../graphql/quries'; // Import ADD_PHOTO and LOGIN mutation
+import { ADD_PHOTO, LOGIN } from '../../graphql/quries'; // Import ADD_PHOTO and LOGIN mutation
 
 export default function Home() {
     const [showSignup, setShowSignup] = useState(false);

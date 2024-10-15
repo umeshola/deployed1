@@ -2,9 +2,8 @@
 
 import { useState } from "react";
 import { useQuery, useMutation } from "@apollo/client";
-import { ALL_PHOTO } from "../graphql/quries"; // Adjust the import path accordingly
-import { CHANGE_TITLE, DELETE_PHOTO } from "../graphql/quries"; // Add your mutations here
-import { equal } from "assert";
+import { ALL_PHOTO } from "../../graphql/quries"; // Adjust the import path accordingly
+import { CHANGE_TITLE, DELETE_PHOTO } from "../../graphql/quries"; // Add your mutations here
 
 export default function Home() {
     const { loading, error, data } = useQuery(ALL_PHOTO);
