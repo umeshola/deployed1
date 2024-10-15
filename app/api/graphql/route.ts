@@ -9,7 +9,7 @@ import { resolvers } from "../../../graphql/resolver";
 
 export type Context = {
     prisma: PrismaClient;
-    userId?: string;  // Add userId to the context
+    userId?: string | null;  // Add userId to the context
 };
 
 const apolloserver = new ApolloServer<Context>({
@@ -26,7 +26,7 @@ const handler = startServerAndCreateNextHandler(apolloserver, {
             const token = authHeader.split(' ')[1];
 
             try {
-                const decoded: any = jwt.verify(token, process.env.JWT_SECRET!);
+                const decoded: { id: string } = jwt.verify(token, process.env.JWT_SECRET!) as { id: string };
                 userId = decoded.id;  // Extract the userId from the token
             } catch (error) {
                 console.error("JWT verification failed:", error);
