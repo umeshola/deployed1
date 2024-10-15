@@ -3,8 +3,8 @@
     "version": "0.1.0",
     "private": true,
     "scripts": {
-        "dev": "next dev",
-        "build": "prisma generate && next build",
+        "dev": "cross-env NEXT_PUBLIC_FRAMEWORK=next NODE_ENV=development next dev",
+        "build": "cross-env NEXT_PUBLIC_FRAMEWORK=next prisma generate && next build",
         "start": "next start",
         "lint": "next lint"
     },
@@ -15,6 +15,7 @@
         "@clerk/nextjs": "^5.7.2",
         "@prisma/client": "^5.20.0",
         "@uploadthing/react": "^7.0.3",
+        "cross-env": "^7.0.3",
         "graphql": "^16.9.0",
         "jsonwebtoken": "^9.0.2",
         "next": "14.2.15",
